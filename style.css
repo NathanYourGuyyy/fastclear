@@ -416,6 +416,19 @@ img {
   transition: opacity 0.4s ease;
 }
 
+header img[src="logo.png"] {
+  width: auto;
+  height: 40px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 640px) {
+  header img[src="logo.png"] {
+    height: 32px;
+  }
+}
+
 img.lazy {
   opacity: 0;
 }
