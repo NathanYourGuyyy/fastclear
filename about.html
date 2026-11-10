@@ -24,6 +24,7 @@
     .whatsapp-btn { position: fixed; bottom: 24px; right: 24px; z-index: 999; background: #25D366; border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,0.25); transition: transform 0.2s; }
     .whatsapp-btn:hover { transform: scale(1.1); }
   </style>
+    <link rel="stylesheet" href="cursor.css" />
 </head>
 <body class="bg-white text-gray-900">
 
@@ -327,5 +328,6 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
   </script>
+  <script src="cursor.js" defer></script>
 </body>
 </html>
