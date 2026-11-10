@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fastclear Cargo | Port Logistics, Simplified</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── Base Fonts ── */
+        body {
+            font-family: 'Inter', sans-serif;
+            animation: bodyFadeIn 0.7s ease both;
+        }
+        .font-serif-title {
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+
+        /* ── Page Load Fade ── */
+        @keyframes bodyFadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Scroll-triggered Fade-in-Up ── */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(36px);
+            transition: opacity 0.65s ease, transform 0.65s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .fade-up-delay-1 { transition-delay: 0.1s; }
+        .fade-up-delay-2 { transition-delay: 0.2s; }
+        .fade-up-delay-3 { transition-delay: 0.3s; }
+        .fade-up-delay-4 { transition-delay: 0.4s; }
+
+        /* ── Mobile Nav Slide ── */
+        #mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
+            opacity: 0;
+        }
+        #mobile-menu.open {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        /* ── Hamburger Icon ── */
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: #020617;
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        .hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .hamburger.active span:nth-child(2) { opacity: 0; }
+        .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+        /* ── Hero ── */
+        .hero-bg {
+            background-image:
+                linear-gradient(to bottom, rgba(2,6,23,0.72) 0%, rgba(23,37,84,0.60) 60%, rgba(2,6,23,0.80) 100%),
+                url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1400&q=80');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* ── About image ── */
+        .about-img {
+            background-image: url('https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=800&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* ── Founder initials ── */
+        .founder-avatar {
+            background: linear-gradient(135deg, #172554 0%, #1e3a8a 50%, #ea580c 100%);
+        }
+
+        /* ── Card hover lift ── */
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(2,6,23,0.12);
+        }
+
+        /* ── Testimonial card ── */
+        .testimonial-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 32px rgba(2,6,23,0.08);
+        }
+
+        /* ── WhatsApp FAB ── */
+        .whatsapp-fab {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 999;
+            width: 58px;
+            height: 58px;
+            background: #25D366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .whatsapp-fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 32px rgba(37,211,102,0.55);
+        }
+        .whatsapp-fab svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+
+        /* ── Stats section gradient border ── */
+        .stat-card {
+            background: rgba(15,23,42,0.6);
+            border: 1px solid rgba(100,116,139,0.2);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: border-color 0.3s ease;
+        }
+        .stat-card:hover {
+            border-color: rgba(234,88,12,0.5);
+        }
+
+        /* ── SVG icon containers ── */
+        .service-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #020617, #172554);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .service-icon svg {
+            width: 26px;
+            height: 26px;
+            stroke: white;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* ── Value icon ── */
+        .value-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: #fff7ed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .value-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: #ea580c;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* ── Quote mark ── */
+        .quote-mark {
+            font-size: 5rem;
+            line-height: 1;
+            color: #ea580c;
+            font-family: 'Playfair Display', serif;
+            opacity: 0.25;
+            user-select: none;
+        }
+
+        /* ── Gradient divider ── */
+        .orange-divider {
+            height: 3px;
+            background: linear-gradient(90deg, #ea580c, #f97316, #fed7aa, transparent);
+            border: none;
+        }
+
+        /* ── Smooth scrollbar ── */
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-white text-slate-900 min-h-screen flex flex-col justify-between selection:bg-orange-500 selection:text-white">
+
+    <!-- ══════════════════════════════════════
+         NAVIGATION BAR (with mobile hamburger)
+    ══════════════════════════════════════ -->
+    <header class="border-b border-slate-200/80 bg-white/90 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center shrink-0">
+                <img src="logo.png" alt="Fastclear Cargo Logo" class="h-10 w-auto object-contain">
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
+                <a href="index.html" class="text-orange-600 font-semibold">Home</a>
+                <a href="about.html" class="hover:text-orange-600 transition">About</a>
+                <a href="services.html" class="hover:text-orange-600 transition">Services &amp; Calculator</a>
+                <a href="hubs.html" class="hover:text-orange-600 transition">Nationwide Hubs</a>
+                <a href="support.html" class="hover:text-orange-600 transition">Support</a>
+            </nav>
+
+            <!-- Desktop CTA + Mobile Hamburger -->
+            <div class="flex items-center gap-4">
+                <a href="services.html" class="hidden md:inline-flex bg-slate-950 hover:bg-orange-600 text-white px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-300 active:scale-95">
+                    Get a Quote
+                </a>
+                <!-- Hamburger button (mobile only) -->
+                <button id="hamburger-btn" aria-label="Open menu" class="md:hidden hamburger flex flex-col gap-[6px] p-1">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (slides down) -->
+        <div id="mobile-menu" class="md:hidden bg-white border-t border-slate-100">
+            <nav class="flex flex-col px-6 py-4 space-y-1 text-sm font-medium text-slate-700">
+                <a href="index.html" class="py-2.5 text-orange-600 font-semibold border-b border-slate-100">Home</a>
+                <a href="about.html" class="py-2.5 hover:text-orange-600 transition border-b border-slate-100">About</a>
+                <a href="services.html" class="py-2.5 hover:text-orange-600 transition border-b border-slate-100">Services &amp; Calculator</a>
+                <a href="hubs.html" class="py-2.5 hover:text-orange-600 transition border-b border-slate-100">Nationwide Hubs</a>
+                <a href="support.html" class="py-2.5 hover:text-orange-600 transition border-b border-slate-100">Support</a>
+                <a href="services.html" class="mt-2 w-full text-center bg-slate-950 text-white px-5 py-3 rounded-full font-semibold transition hover:bg-orange-600">
+                    Get a Quote
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ══════════════════════════════════════
+         SECTION 1: HERO
+         Full-width cargo ship background with dark overlay
+    ══════════════════════════════════════ -->
+    <section class="hero-bg relative overflow-hidden pt-28 pb-32 px-6">
+        <div class="max-w-5xl mx-auto text-center space-y-8">
+            <!-- Badge -->
+            <div class="fade-up inline-flex items-center space-x-2 bg-white/10 border border-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-orange-300 text-xs font-semibold tracking-wide shadow">
+                <span class="inline-block w-2 h-2 bg-orange-400 rounded-full animate-pulse"></span>
+                <span>⚡ Global Freight Solutions You Can Trust</span>
+            </div>
+
+            <!-- Headline -->
+            <h1 class="fade-up fade-up-delay-1 text-4xl sm:text-7xl font-serif-title font-bold tracking-tight text-white leading-[1.1]">
+                Complete Reliable Supply Chain <span class="text-orange-400 italic font-normal">Management</span>
+            </h1>
+
+            <!-- Sub-copy -->
+            <p class="fade-up fade-up-delay-2 text-slate-300 text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+                We deliver reliable international freight forwarding, customs clearance, warehousing, and supply chain solutions with speed, safety, and precision.
+            </p>
+
+            <!-- CTAs -->
+            <div class="fade-up fade-up-delay-3 pt-2 flex flex-wrap justify-center gap-4">
+                <a href="about.html" class="bg-orange-600 hover:bg-orange-500 text-white font-semibold px-8 py-3.5 rounded-full text-sm transition-all duration-300 active:scale-95 shadow-lg shadow-orange-900/40">
+                    Find Out More +
+                </a>
+                <a href="services.html" class="bg-white/10 hover:bg-white/20 border border-white/30 text-white font-semibold px-8 py-3.5 rounded-full text-sm backdrop-blur-sm transition-all duration-300 active:scale-95">
+                    Calculate Shipping
+                </a>
+            </div>
+        </div>
+
+        <!-- Dashboard Card -->
+        <div class="max-w-6xl mx-auto mt-16 px-4">
+            <div class="fade-up fade-up-delay-4 bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-slate-900/30 relative overflow-hidden">
+                <!-- Inner glow accent -->
+                <div class="absolute top-0 left-0 w-32 h-32 bg-orange-500/5 rounded-full -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-6 border-b border-slate-100 gap-4">
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-widest text-slate-400">Live Operations Dashboard</p>
+                        <h3 class="text-lg font-bold text-blue-950 mt-1">Active Cargo Throughput &amp; Customs Clearance</h3>
+                    </div>
+                    <span class="bg-orange-50 text-orange-700 text-xs font-bold px-3 py-1.5 rounded-full border border-orange-200 shrink-0">₦8,500 / kg Standard Rate</span>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-5 pt-6">
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 hover:border-orange-200 transition">
+                        <p class="text-xs text-slate-500 uppercase font-semibold tracking-wider">Air Freight Hub</p>
+                        <p class="text-xl font-bold text-blue-950 mt-1">3 – 5 Days</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 hover:border-orange-200 transition">
+                        <p class="text-xs text-slate-500 uppercase font-semibold tracking-wider">Sea Cargo Transit</p>
+                        <p class="text-xl font-bold text-blue-950 mt-1">3 – 6 Weeks</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 hover:border-orange-200 transition">
+                        <p class="text-xs text-slate-500 uppercase font-semibold tracking-wider">Terminal Nodes</p>
+                        <p class="text-xl font-bold text-blue-950 mt-1">6 Hubs Nationwide</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl border border-slate-100 hover:border-orange-200 transition">
+                        <p class="text-xs text-slate-500 uppercase font-semibold tracking-wider">Customs Compliance</p>
+                        <p class="text-xl font-bold text-orange-600 mt-1">100% Verified</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SECTION 2: ABOUT US
+         Real warehouse image on right
+    ══════════════════════════════════════ -->
+    <section class="py-24 px-6 bg-white">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <!-- Text -->
+            <div class="space-y-6 fade-up">
+                <span class="text-xs font-bold text-orange-600 uppercase tracking-widest">— Company Profile</span>
+                <h2 class="text-3xl sm:text-5xl font-serif-title font-bold text-blue-950">
+                    About <span class="text-orange-600 italic">Us</span>
+                </h2>
+                <p class="text-xl font-semibold text-slate-800 leading-snug">
+                    We are committed to delivering safe, reliable, and timely logistics solutions.
+                </p>
+                <p class="text-slate-600 leading-relaxed">
+                    Fastclear Nigeria Limited is a privately owned logistics and supply chain management company incorporated in Nigeria, specializing in international freight forwarding and customs clearing services. We are committed to delivering safe, reliable, and timely logistics solutions tailored to meet the needs of individuals, commercial businesses, and industrial clients.
+                </p>
+
+                <!-- Founder -->
+                <div class="pt-4 border-t border-slate-100 flex items-center gap-4">
+                    <div class="founder-avatar w-12 h-12 rounded-full flex items-center justify-center shrink-0">
+                        <span class="text-white font-bold text-sm tracking-wide">SA</span>
+                    </div>
+                    <div>
+                        <p class="font-bold text-blue-950">Sodiq Awopeju</p>
+                        <p class="text-xs text-slate-500 uppercase tracking-wider">Executive Director</p>
+                    </div>
+                </div>
+
+                <div>
+                    <a href="about.html" class="inline-flex items-center gap-2 bg-slate-950 hover:bg-orange-600 text-white font-medium px-6 py-3 rounded-full text-sm transition-all duration-300 active:scale-95">
+                        <span>Find Out More</span>
+                        <span>+</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Real image -->
+            <div class="fade-up fade-up-delay-2 relative h-96 lg:h-[480px] rounded-3xl overflow-hidden shadow-xl shadow-slate-900/10 border border-slate-200/80">
+                <div class="about-img absolute inset-0 w-full h-full"></div>
+                <!-- Overlay badge -->
+                <div class="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm rounded-2xl px-5 py-3 shadow-lg flex items-center gap-3">
+                    <div class="w-9 h-9 bg-orange-600 rounded-full flex items-center justify-center shrink-0">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 font-medium">Licensed &amp; Accredited</p>
+                        <p class="text-sm font-bold text-blue-950">Customs Clearing Agent</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SECTION 3: VISION STATEMENT & STATS
+         Dark section
+    ══════════════════════════════════════ -->
+    <section class="bg-slate-950 text-white py-24 px-6">
+        <div class="max-w-7xl mx-auto space-y-16">
+            <!-- Vision -->
+            <div class="max-w-3xl space-y-6 fade-up">
+                <span class="text-xs font-bold text-orange-400 uppercase tracking-widest">— Strategic Outlook</span>
+                <h2 class="text-3xl sm:text-5xl font-serif-title font-bold">
+                    Vision <span class="text-orange-500 italic">Statement</span>
+                </h2>
+                <p class="text-xl sm:text-3xl text-slate-300 italic font-light leading-relaxed">
+                    "To become a continental brand name in all areas of Logistics and Supply‑Chain Management Operations, most especially in international freight forwarding."
+                </p>
+                <div>
+                    <a href="about.html" class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-full text-sm transition-all duration-300 active:scale-95">
+                        <span>Learn More</span>
+                        <span>+</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Divider + Stats -->
+            <div class="border-t border-slate-800 pt-16 fade-up">
+                <p class="text-xs uppercase tracking-widest text-slate-500 text-center mb-10 font-semibold">
+                    Fastclear Achieved This in 7 Years of Operations
+                </p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                    <div class="stat-card fade-up fade-up-delay-1">
+                        <p class="text-5xl font-serif-title font-bold text-orange-400">50K</p>
+                        <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider mt-3">Shipments Delivered</p>
+                    </div>
+                    <div class="stat-card fade-up fade-up-delay-2">
+                        <p class="text-5xl font-serif-title font-bold text-orange-400">40+</p>
+                        <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider mt-3">Years Experience</p>
+                    </div>
+                    <div class="stat-card fade-up fade-up-delay-3">
+                        <p class="text-5xl font-serif-title font-bold text-orange-400">30+</p>
+                        <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider mt-3">Global Trade Partners</p>
+                    </div>
+                    <div class="stat-card fade-up fade-up-delay-4">
+                        <p class="text-5xl font-serif-title font-bold text-orange-400">99%</p>
+                        <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider mt-3">Satisfaction Rate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SECTION 4: SERVICES WORLDWIDE
+         4 cards with inline SVG icons
+    ══════════════════════════════════════ -->
+    <section class="py-24 px-6 bg-slate-50/60 border-y border-slate-200/80">
+        <div class="max-w-7xl mx-auto space-y-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div class="space-y-2 max-w-2xl fade-up">
+                    <span class="text-xs font-bold text-orange-600 uppercase tracking-widest">— Capabilities</span>
+                    <h2 class="text-3xl sm:text-5xl font-serif-title font-bold text-blue-950">
+                        Efficient and Secure Shipping Solutions <span class="text-orange-600 italic">Worldwide</span>
+                    </h2>
+                </div>
+                <a href="services.html" class="fade-up inline-flex items-center gap-2 bg-slate-950 hover:bg-orange-600 text-white font-medium px-6 py-3 rounded-full text-sm transition-all duration-300 active:scale-95 self-start shrink-0">
+                    <span>All Services</span>
+                    <span>+</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1 – Air Freight (Plane icon) -->
+                <div class="bg-white border border-slate-200/80 p-8 rounded-3xl space-y-5 shadow-sm card-hover fade-up fade-up-delay-1">
+                    <div class="service-icon">
+                        <!-- Plane SVG -->
+                        <svg viewBox="0 0 24 24" stroke="white" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 16v-2l-8-5V3.5A1.5 1.5 0 0 0 11.5 2h-1A1.5 1.5 0 0 0 9 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L12 19v-5.5l9 2.5z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-blue-950">International Forwarding</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">We provide reliable and cost-effective international freight forwarding solutions tailored for every shipment size.</p>
+                    <a href="services.html" class="inline-block text-orange-600 font-bold text-sm hover:underline">Read More +</a>
+                </div>
+
+                <!-- Card 2 – Sea Freight (Ship icon) -->
+                <div class="bg-white border border-slate-200/80 p-8 rounded-3xl space-y-5 shadow-sm card-hover fade-up fade-up-delay-2">
+                    <div class="service-icon">
+                        <!-- Ship SVG -->
+                        <svg viewBox="0 0 24 24" stroke="white" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M2 20a2 2 0 002 2h16a2 2 0 002-2"/>
+                            <path d="M12 2v8M5.17 15a7 7 0 0013.66 0H5.17z"/>
+                            <path d="M12 10l-6 5h12l-6-5z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-blue-950">Customs Clearing &amp; Brokerage</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">As a licensed and accredited customs clearing agent, we facilitate smooth and compliant clearance of all cargo.</p>
+                    <a href="services.html" class="inline-block text-orange-600 font-bold text-sm hover:underline">Read More +</a>
+                </div>
+
+                <!-- Card 3 – Perishables (Snowflake icon) -->
+                <div class="bg-white border border-slate-200/80 p-8 rounded-3xl space-y-5 shadow-sm card-hover fade-up fade-up-delay-3">
+                    <div class="service-icon">
+                        <!-- Snowflake SVG -->
+                        <svg viewBox="0 0 24 24" stroke="white" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="2" x2="12" y2="22"/>
+                            <path d="M17 7l-5 5-5-5"/>
+                            <path d="M17 17l-5-5-5 5"/>
+                            <line x1="2" y1="12" x2="22" y2="12"/>
+                            <path d="M7 7l-5 5 5 5"/>
+                            <path d="M17 7l5 5-5 5"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-blue-950">Perishable Cargo Handling</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">We specialize in the temperature-controlled handling of perishable goods, ensuring fresh and safe delivery.</p>
+                    <a href="services.html" class="inline-block text-orange-600 font-bold text-sm hover:underline">Read More +</a>
+                </div>
+
+                <!-- Card 4 – Project Cargo (Truck icon) -->
+                <div class="bg-white border border-slate-200/80 p-8 rounded-3xl space-y-5 shadow-sm card-hover fade-up fade-up-delay-4">
+                    <div class="service-icon">
+                        <!-- Truck SVG -->
+                        <svg viewBox="0 0 24 24" stroke="white" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="1" y="3" width="15" height="13" rx="1"/>
+                            <path d="M16 8h4l3 5v4h-7V8z"/>
+                            <circle cx="5.5" cy="18.5" r="2.5"/>
+                            <circle cx="18.5" cy="18.5" r="2.5"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-blue-950">Project &amp; Abnormal Cargo</h3>
+                    <p class="text-slate-600 text-sm leading-relaxed">We specialize in the transportation of oversize project and abnormal cargo with expert planning and care.</p>
+                    <a href="services.html" class="inline-block text-orange-600 font-bold text-sm hover:underline">Read More +</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SECTION 5: OUR CORE VALUES
+         Dark background, 5 value cards
+    ══════════════════════════════════════ -->
+    <section class="bg-slate-950 text-white py-24 px-6">
+        <div class="max-w-7xl mx-auto space-y-12">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div class="space-y-2 fade-up">
+                    <span class="text-xs font-bold text-orange-400 uppercase tracking-widest">— Principles</span>
+                    <h2 class="text-3xl sm:text-5xl font-serif-title font-bold">
+                        Our Core <span class="text-orange-500 italic">Values</span>
+                    </h2>
+                </div>
+                <a href="about.html" class="fade-up inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-3 rounded-full text-sm transition-all duration-300 active:scale-95 self-start shrink-0">
+                    <span>Find Out More</span>
+                    <span>+</span>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                <!-- Integrity -->
+                <div class="bg-white text-slate-900 p-6 rounded-3xl space-y-4 card-hover fade-up fade-up-delay-1">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24" stroke="#ea580c" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold text-blue-950 text-base">Integrity</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed">We act with honesty, transparency, and unwavering ethical standards in every transaction.</p>
+                </div>
+
+                <!-- Stewardship -->
+                <div class="bg-white text-slate-900 p-6 rounded-3xl space-y-4 card-hover fade-up fade-up-delay-2">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24" stroke="#ea580c" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10 9 9 9 8 9"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold text-blue-950 text-base">Stewardship</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed">We manage client resources with care, diligence, and full accountability at every stage.</p>
+                </div>
+
+                <!-- Excellence -->
+                <div class="bg-white text-slate-900 p-6 rounded-3xl space-y-4 card-hover fade-up fade-up-delay-3">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24" stroke="#ea580c" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold text-blue-950 text-base">Excellence</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed">We strive for the highest standards of service quality and operational performance.</p>
+                </div>
+
+                <!-- Value Creation -->
+                <div class="bg-white text-slate-900 p-6 rounded-3xl space-y-4 card-hover fade-up fade-up-delay-4">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24" stroke="#ea580c" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="8" x2="12" y2="12"/>
+                            <line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold text-blue-950 text-base">Value Creation</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed">We deliver solutions that tangibly create value and consistently meet evolving client needs.</p>
+                </div>
+
+                <!-- Consistency -->
+                <div class="bg-white text-slate-900 p-6 rounded-3xl space-y-4 card-hover fade-up">
+                    <div class="value-icon">
+                        <svg viewBox="0 0 24 24" stroke="#ea580c" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 010 7.75"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-bold text-blue-950 text-base">Consistency</h3>
+                    <p class="text-slate-600 text-xs leading-relaxed">We provide reliable, dependable service at all times—no matter the route or complexity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SECTION 6: CUSTOMER RELATIONSHIP MANAGEMENT
+    ══════════════════════════════════════ -->
+    <section class="py-24 px-6 bg-white">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+
+            <!-- Feature Grid -->
+            <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div class="bg-slate-50 border border-slate-200/80 p-6 rounded-3xl space-y-3 card-hover fade-up fade-up-delay-1">
+                    <div class="w-10 h-10 rounded-full bg-slate-950 text-white flex items-center justify-center font-bold text-sm">1</div>
+                    <h4 class="font-bold text-blue-950">Customer <span class="text-orange-600">Focus</span></h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">We listen to our clients and develop tailored solutions that precisely fit their unique logistics needs.</p>
+                </div>
+                <div class="bg-slate-50 border border-slate-200/80 p-6 rounded-3xl space-y-3 card-hover fade-up fade-up-delay-2">
+                    <div class="w-10 h-10 rounded-full bg-slate-950 text-white flex items-center justify-center font-bold text-sm">2</div>
+                    <h4 class="font-bold text-blue-950">Fast <span class="text-orange-600">Clearance</span></h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">We manage all customs procedures quickly and accurately, minimizing delays and demurrage charges.</p>
+                </div>
+                <div class="bg-slate-50 border border-slate-200/80 p-6 rounded-3xl space-y-3 card-hover fade-up fade-up-delay-3">
+                    <div class="w-10 h-10 rounded-full bg-slate-950 text-white flex items-center justify-center font-bold text-sm">3</div>
+                    <h4 class="font-bold text-blue-950">Safe <span class="text-orange-600">Delivery</span></h4>
+                    <p class="text-xs text-slate-600 leading-relaxed">We ensure all goods are transported safely and delivered on time, every time—no exceptions.</p>
+                </div>
+                <div class="bg-orange-600 text-white p-6 rounded-3xl space-y-3 shadow-lg shadow-orange-600/20 card-hover fade-up fade-up-delay-4">
+                    <div class="w-10 h-10 rounded-full bg-white text-orange-600 flex items-center justify-center font-bold text-sm">4</div>
+                    <h4 class="font-bold text-white">Lasting Partnership</h4>
+                    <p class="text-xs text-orange-100 leading-relaxed">We create lasting value through reliable service, genuine trust, and outstanding customer support.</p>
+                </div>
+            </div>
+
+            <!-- Text -->
+            <div class="lg:col-span-6 space-y-6 fade-up">
+                <span class="text-xs font-bold text-orange-600 uppercase tracking-widest">— Client Relations</span>
+                <h2 class="text-3xl sm:text-5xl font-serif-title font-bold text-blue-950">
+                    Customer Relationship <span class="text-orange-600 italic">Management</span>
+                </h2>
+                <p class="text-base font-semibold text-slate-800">
+                    Our customer relationship strategy is guided by long-term partnership building.
+                </p>
+                <p class="text-slate-600 text-sm leading-relaxed">
+                    At Fastclear Cargo, we recognize that our customers are the driving force behind our success and continued growth. We believe that strong customer relationships are built on trust, reliability, and a commitment to delivering exceptional service. Our approach is not centered on transactions alone but on creating lasting partnerships that contribute to the growth and success of our clients.
+                </p>
+                <div>
+                    <a href="about.html" class="inline-flex items-center gap-2 bg-slate-950 hover:bg-orange-600 text-white font-medium px-6 py-3 rounded-full text-sm transition-all duration-300 active:scale-95">
+                        <span>Find Out More</span>
+                        <span>+</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         SECTION 7: TESTIMONIALS
+         3 client quotes on light gray bg
+    ══════════════════════════════════════ -->
+    <section class="py-24 px-6 bg-slate-50 border-y border-slate-200/70">
+        <div class="max-w-7xl mx-auto space-y-12">
+            <div class="text-center space-y-3 fade-up">
+                <span class="text-xs font-bold text-orange-600 uppercase tracking-widest">— Client Voices</span>
+                <h2 class="text-3xl sm:text-5xl font-serif-title font-bold text-blue-950">
+                    What Our <span class="text-orange-600 italic">Clients Say</span>
+                </h2>
+                <p class="text-slate-500 max-w-xl mx-auto text-sm leading-relaxed">
+                    Thousands of businesses across Nigeria trust Fastclear Cargo to move their goods — safely, swiftly, and seamlessly.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-200/80 testimonial-card flex flex-col gap-5 fade-up fade-up-delay-1">
+                    <div class="quote-mark leading-none">"</div>
+                    <p class="text-slate-700 text-sm leading-relaxed -mt-6">
+                        Fastclear handled our entire import shipment from China with zero hiccups. The customs clearance was completed in record time and their team kept us updated every step of the way. Highly recommended!
+                    </p>
+                    <div class="mt-auto flex items-center gap-3 pt-4 border-t border-slate-100">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-950 to-orange-500 flex items-center justify-center shrink-0">
+                            <span class="text-white text-xs font-bold">AO</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-blue-950 text-sm">Adewale Okonkwo</p>
+                            <p class="text-xs text-slate-500">CEO, PanAfrica Traders Ltd</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-blue-950 rounded-3xl p-8 shadow-xl border border-blue-900 testimonial-card flex flex-col gap-5 fade-up fade-up-delay-2">
+                    <div class="quote-mark leading-none" style="color: #ea580c; opacity: 0.5;">"</div>
+                    <p class="text-blue-100 text-sm leading-relaxed -mt-6">
+                        We've been using Fastclear for our perishable goods import for over three years. Their cold-chain handling is impeccable and the team is always responsive. They genuinely care about your cargo.
+                    </p>
+                    <div class="mt-auto flex items-center gap-3 pt-4 border-t border-blue-900">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-orange-700 flex items-center justify-center shrink-0">
+                            <span class="text-white text-xs font-bold">FI</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-white text-sm">Fatima Ibrahim</p>
+                            <p class="text-xs text-blue-300">Director of Supply Chain, FreshBridge Farms</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-200/80 testimonial-card flex flex-col gap-5 fade-up fade-up-delay-3">
+                    <div class="quote-mark leading-none">"</div>
+                    <p class="text-slate-700 text-sm leading-relaxed -mt-6">
+                        Moving industrial equipment from Europe to Nigeria is never easy, but Fastclear made it feel effortless. Their project cargo team managed every regulation and documentation perfectly. Exceptional service.
+                    </p>
+                    <div class="mt-auto flex items-center gap-3 pt-4 border-t border-slate-100">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-slate-800 to-slate-950 flex items-center justify-center shrink-0">
+                            <span class="text-white text-xs font-bold">CE</span>
+                        </div>
+                        <div>
+                            <p class="font-bold text-blue-950 text-sm">Chidi Eze</p>
+                            <p class="text-xs text-slate-500">Operations Manager, NovaTech Industries</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════
+         FOOTER
+         Orange, with address, giant FASTCLEAR wordmark
+    ══════════════════════════════════════ -->
+    <footer class="bg-orange-600 text-white pt-16 pb-8 overflow-hidden border-t border-orange-700">
+        <div class="max-w-7xl mx-auto px-6 space-y-10">
+
+            <!-- Footer Top: Nav links + Contact info -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Brand blurb -->
+                <div class="space-y-4">
+                    <img src="logo.png" alt="Fastclear Cargo" class="h-10 w-auto object-contain brightness-0 invert">
+                    <p class="text-orange-100 text-sm leading-relaxed">
+                        Nigeria's trusted logistics partner for international freight forwarding, customs clearance, and supply chain management.
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-widest text-orange-200 mb-4">Quick Links</h4>
+                    <nav class="flex flex-col space-y-2 text-sm font-medium text-orange-100">
+                        <a href="index.html" class="hover:text-white transition">Home</a>
+                        <a href="about.html" class="hover:text-white transition">About Us</a>
+                        <a href="services.html" class="hover:text-white transition">Services &amp; Calculator</a>
+                        <a href="hubs.html" class="hover:text-white transition">Nationwide Hubs</a>
+                        <a href="support.html" class="hover:text-white transition">Support</a>
+                    </nav>
+                </div>
+
+                <!-- Contact Details -->
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-widest text-orange-200 mb-4">Contact Us</h4>
+                    <ul class="space-y-3 text-sm text-orange-100">
+                        <li class="flex items-start gap-2">
+                            <svg class="w-4 h-4 mt-0.5 shrink-0 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                            <span>35 Eweje Street, Mafoluku,<br>Oshodi, Lagos, Nigeria</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 shrink-0 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                            </svg>
+                            <a href="tel:+2348051730649" class="hover:text-white transition">+234 805 173 0649</a>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <svg class="w-4 h-4 shrink-0 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                            <a href="mailto:info@fastclearcargo.com" class="hover:text-white transition">info@fastclearcargo.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Divider -->
+            <hr class="border-orange-500/50">
+
+            <!-- Bottom row: copyright -->
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-3 text-sm font-medium text-orange-100">
+                <p>&copy; 2026 Fastclear Cargo Nigeria Limited. All rights reserved.</p>
+                <p class="text-xs text-orange-200">RC No. Incorporated in Nigeria</p>
+            </div>
+
+            <!-- Giant FASTCLEAR Wordmark -->
+            <div class="pt-4 border-t border-orange-500/40">
+                <h1 class="text-[14vw] font-serif-title font-black uppercase tracking-tighter leading-none select-none text-white/90 text-center">
+                    FASTCLEAR
+                </h1>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ══════════════════════════════════════
+         FLOATING WHATSAPP BUTTON
+    ══════════════════════════════════════ -->
+    <a href="https://wa.me/2348051730649" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp" class="whatsapp-fab">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <!-- ══════════════════════════════════════
+         JAVASCRIPT: Hamburger + IntersectionObserver
+    ══════════════════════════════════════ -->
+    <script>
+        /* ── Mobile Hamburger Menu ── */
+        (function () {
+            var btn  = document.getElementById('hamburger-btn');
+            var menu = document.getElementById('mobile-menu');
+            if (!btn || !menu) return;
+
+            btn.addEventListener('click', function () {
+                var isOpen = menu.classList.toggle('open');
+                btn.classList.toggle('active', isOpen);
+                btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            /* Close menu on outside click */
+            document.addEventListener('click', function (e) {
+                if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                    menu.classList.remove('open');
+                    btn.classList.remove('active');
+                    btn.setAttribute('aria-expanded', 'false');
+                }
+            });
+        })();
+
+        /* ── Scroll-triggered Fade-in-Up ── */
+        (function () {
+            var observer = new IntersectionObserver(
+                function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                },
+                { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+            );
+
+            document.querySelectorAll('.fade-up').forEach(function (el) {
+                observer.observe(el);
+            });
+        })();
+    </script>
+</body>
+</html>

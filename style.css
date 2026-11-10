@@ -1,0 +1,482 @@
+/* ============================================================
+   Fastclear Cargo — Supplemental Stylesheet
+   Tailwind CSS v4 Browser CDN companion styles
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. CSS Custom Properties (Brand Colors)
+   ------------------------------------------------------------ */
+:root {
+  --color-primary:    #f58220;
+  --color-blue:       #0878b9;
+  --color-dark-navy:  #075284;
+  --color-very-dark:  #102b3f;
+  --color-white:      #ffffff;
+
+  --color-primary-light:  #f9a04e;
+  --color-primary-dark:   #d96f0b;
+  --color-blue-light:     #eaf5fb;
+}
+
+/* ------------------------------------------------------------
+   2. Font Definitions
+   ------------------------------------------------------------ */
+/* Default body font */
+html,
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
+               'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Serif headline class */
+.font-serif-title {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+}
+
+/* ------------------------------------------------------------
+   3. Smooth Scroll
+   ------------------------------------------------------------ */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ------------------------------------------------------------
+   4. Custom Keyframe Animations
+   ------------------------------------------------------------ */
+
+/* Fade up from below */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Simple fade */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Mobile menu slide down */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 600px;
+  }
+}
+
+/* Stat counter pulse (used with JS countUp logic) */
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animation utility classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.7s ease both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease both;
+}
+
+/* ------------------------------------------------------------
+   5. Intersection Observer Reveal Classes
+   ------------------------------------------------------------ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* ------------------------------------------------------------
+   6. Mobile Hamburger → X Animation
+   ------------------------------------------------------------ */
+.hamburger {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+  transform-origin: center;
+}
+
+/* Open state: top line rotates to form top of X */
+.hamburger.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+/* Open state: middle line fades out */
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+/* Open state: bottom line rotates to form bottom of X */
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Mobile menu slide-down animation applied to the menu container */
+.mobile-menu.open {
+  animation: slideDown 0.35s ease forwards;
+}
+
+/* ------------------------------------------------------------
+   7. Custom Scrollbar
+   ------------------------------------------------------------ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-very-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-dark);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-very-dark);
+}
+
+/* ------------------------------------------------------------
+   8. Hero Section Overlay
+   ------------------------------------------------------------ */
+.hero-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(2, 6, 23, 0.85)   0%,
+    rgba(23, 37, 84, 0.70)  50%,
+    rgba(234, 88, 12, 0.25) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-overlay > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Brand palette: Fastclear logo blue, orange and white. */
+[class~="text-orange-300"] { color: #f9a04e !important; }
+[class~="text-orange-400"] { color: #f58220 !important; }
+[class~="text-orange-500"],
+[class~="text-orange-600"] { color: #e87512 !important; }
+[class~="text-orange-700"] { color: #c65e08 !important; }
+[class~="bg-orange-400"] { background-color: #f9a04e !important; }
+[class~="bg-orange-500"],
+[class~="bg-orange-600"] { background-color: #f58220 !important; }
+[class~="bg-orange-700"] { background-color: #d96f0b !important; }
+[class~="border-orange-600"] { border-color: #f58220 !important; }
+[class~="text-blue-950"] { color: #075284 !important; }
+[class~="text-blue-900"] { color: #08669d !important; }
+[class~="bg-blue-950"] { background-color: #075284 !important; }
+[class~="bg-blue-50"] { background-color: #eaf5fb !important; }
+[class~="border-blue-900"] { border-color: #06456e !important; }
+[class~="hover:bg-orange-500"]:hover,
+[class~="hover:bg-orange-600"]:hover,
+[class~="hover:bg-orange-700"]:hover { background-color: #d96f0b !important; }
+[class~="hover:text-orange-600"]:hover,
+[class~="hover:text-orange-700"]:hover { color: #0878b9 !important; }
+
+/* Editorial freight heroes for the inner pages. */
+.brand-hero {
+  position: relative;
+  display: flex;
+  min-height: 34rem;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-color: #102b3f;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  isolation: isolate;
+}
+
+.brand-hero::before {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(7, 37, 58, 0.88), rgba(7, 82, 132, 0.48) 65%, rgba(245, 130, 32, 0.16));
+  content: "";
+}
+
+.brand-hero--about {
+  background-image: url("https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=1800&q=80");
+}
+
+.brand-hero--support {
+  background-image: url("https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1800&q=80");
+}
+
+.brand-hero--services {
+  background-image: url("https://images.unsplash.com/photo-1578575437130-527eed3abbec?w=1800&q=80");
+}
+
+.brand-hero--hubs {
+  background-image: url("https://images.unsplash.com/photo-1519003722824-194d4455a60c?w=1800&q=80");
+}
+
+.brand-hero__content {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 2rem, 64rem);
+  margin-inline: auto;
+  padding-block: 5rem;
+}
+
+@media (max-width: 640px) {
+  .brand-hero { min-height: 30rem; }
+  .brand-hero__content { padding-block: 4rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   9. Card Hover Effects
+   ------------------------------------------------------------ */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    0 20px 40px rgba(234, 88, 12, 0.15),
+    0 8px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* Generic card base */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
+}
+
+/* ------------------------------------------------------------
+   10. WhatsApp Floating Button
+   ------------------------------------------------------------ */
+.whatsapp-float {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #25d366;
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.45);
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+  animation: fadeInUp 0.6s ease 1s both;
+}
+
+.whatsapp-float:hover {
+  background-color: #128c7e;
+  transform: scale(1.1) translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.55);
+}
+
+.whatsapp-float svg,
+.whatsapp-float img {
+  width: 28px;
+  height: 28px;
+}
+
+/* Optional label pill */
+.whatsapp-float .wa-label {
+  display: none;
+  position: absolute;
+  right: 64px;
+  white-space: nowrap;
+  background: #25d366;
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.whatsapp-float:hover .wa-label {
+  display: block;
+}
+
+/* ------------------------------------------------------------
+   11. Text Selection Color
+   ------------------------------------------------------------ */
+::selection {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+::-moz-selection {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+/* ------------------------------------------------------------
+   12. Focus Ring Styles for Form Inputs (Orange)
+   ------------------------------------------------------------ */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.35);
+  border-color: var(--color-primary) !important;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ------------------------------------------------------------
+   13. Smooth Image Loading
+   ------------------------------------------------------------ */
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: opacity 0.4s ease;
+}
+
+img.lazy {
+  opacity: 0;
+}
+
+img.lazy.loaded {
+  opacity: 1;
+}
+
+/* Aspect-ratio helpers */
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ------------------------------------------------------------
+   14. Print Media Query
+   ------------------------------------------------------------ */
+@media print {
+  /* Hide navigation, footer, floating buttons, and decorative elements */
+  nav,
+  header nav,
+  .mobile-menu,
+  footer,
+  .whatsapp-float,
+  .hamburger,
+  button:not([type="submit"]) {
+    display: none !important;
+  }
+
+  /* Show only main content */
+  body {
+    color: #000 !important;
+    background: #fff !important;
+    font-size: 12pt;
+  }
+
+  main,
+  article,
+  section {
+    display: block !important;
+    page-break-inside: avoid;
+  }
+
+  a {
+    color: #000 !important;
+    text-decoration: underline;
+  }
+
+  h1, h2, h3 {
+    page-break-after: avoid;
+    color: #000 !important;
+  }
+
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+}
+
+/* ============================================================
+   End of Fastclear Cargo — style.css
+   ============================================================ */

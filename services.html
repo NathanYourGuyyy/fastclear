@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services & Calculator | Fastclear Cargo</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-white text-slate-900 min-h-screen flex flex-col justify-between selection:bg-orange-500 selection:text-white">
+
+    <!-- Shared Navigation -->
+    <header class="border-b border-slate-200/80 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center">
+                <img src="logo.png" alt="Fastclear Cargo Logo" class="h-10 w-auto object-contain">
+            </a>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
+                <a href="index.html" class="hover:text-orange-600 transition">Home</a>
+                <a href="about.html" class="hover:text-orange-600 transition">About</a>
+                <a href="services.html" class="text-orange-600 font-semibold">Services & Calculator</a>
+                <a href="hubs.html" class="hover:text-orange-600 transition">Nationwide Hubs</a>
+                <a href="support.html" class="hover:text-orange-600 transition">Support</a>
+            </nav>
+            <a href="services.html" class="bg-slate-950 hover:bg-slate-800 text-white px-5 py-2.5 rounded-full font-medium text-sm transition active:scale-95">Get a Quote</a>
+        </div>
+    </header>
+
+    <section class="brand-hero brand-hero--services px-4 text-white">
+        <div class="brand-hero__content">
+            <span class="text-xs font-bold uppercase tracking-widest text-orange-300">Capabilities &amp; Pricing</span>
+            <h1 class="mt-4 max-w-3xl text-4xl sm:text-6xl font-serif-title font-bold leading-tight">Freight that moves your business forward</h1>
+            <p class="mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-white/85">Air and sea freight, customs clearance, and practical shipping estimates for cargo moving to and from Nigeria.</p>
+            <a href="#shipping-estimator" class="mt-8 inline-flex items-center bg-orange-600 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-orange-700">Estimate shipping <span class="ml-2" aria-hidden="true">&rarr;</span></a>
+        </div>
+    </section>
+
+    <!-- Services & Calculator Section -->
+    <main class="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start flex-grow">
+        
+        <div class="lg:col-span-5 space-y-6">
+            <span class="text-xs font-bold text-orange-600 uppercase tracking-widest">— Capabilities & Pricing</span>
+            <h1 class="text-3xl sm:text-5xl font-serif-title font-bold text-blue-950">Sea & Air Freight Solutions</h1>
+            <p class="text-slate-600 text-sm leading-relaxed">
+                Choose the transport mode that fits your timeline and budget. Standard shipping rate is ₦8,500 per kg. Use our interactive estimator to calculate costs instantly.
+            </p>
+
+            <div class="space-y-4 pt-2">
+                <div class="p-5 bg-slate-50 border border-slate-200/80 rounded-3xl">
+                    <h4 class="font-bold text-blue-950 text-base font-serif-title">✈️ Air Freight Express</h4>
+                    <p class="text-xs text-slate-600 mt-1">Fast delivery for time-sensitive cargo (3 to 5 Days).</p>
+                </div>
+                <div class="p-5 bg-slate-50 border border-slate-200/80 rounded-3xl">
+                    <h4 class="font-bold text-blue-950 text-base font-serif-title">🚢 Sea Freight Cargo</h4>
+                    <p class="text-xs text-slate-600 mt-1">Economical shipping for bulk commercial goods (3 to 6 Weeks).</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="shipping-estimator" class="lg:col-span-7 bg-white border border-slate-200/80 p-8 rounded-3xl shadow-xl shadow-slate-900/5 relative overflow-hidden">
+            <h3 class="text-2xl font-serif-title font-bold mb-6 flex items-center justify-between text-blue-950">
+                <span>Shipping Cost Estimator</span>
+                <span class="text-xs bg-orange-100 text-orange-700 font-bold px-3 py-1 rounded-full">₦8,500 / kg</span>
+            </h3>
+
+            <div class="space-y-5">
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Package Weight (kg)</label>
+                    <input type="number" id="weight" value="10" min="1" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-slate-900 focus:outline-none focus:border-orange-500 font-semibold text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Shipping Mode</label>
+                    <select id="mode" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-slate-900 focus:outline-none focus:border-orange-500 font-semibold text-sm">
+                        <option value="air">Air Freight (Standard Rate)</option>
+                        <option value="sea">Sea Freight (Standard Rate)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Service Type</label>
+                    <select id="serviceType" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-slate-900 focus:outline-none focus:border-orange-500 font-semibold text-sm">
+                        <option value="normal">Normal Delivery</option>
+                        <option value="express">Express Priority (+ ₦15,000 fee)</option>
+                    </select>
+                </div>
+
+                <button onclick="calculateCost()" class="w-full bg-slate-950 hover:bg-slate-800 text-white font-medium py-4 rounded-full transition active:scale-95 text-sm">
+                    Calculate Estimated Cost
+                </button>
+
+                <div id="costResult" aria-live="polite" class="hidden mt-6 p-6 bg-orange-50 border border-orange-200 rounded-2xl text-center space-y-1">
+                    <p class="text-xs text-orange-800 uppercase tracking-widest font-bold">Total Estimated Price</p>
+                    <p id="priceOutput" class="text-3xl font-serif-title font-bold text-blue-950">₦0.00</p>
+                    <p id="transitOutput" class="text-xs text-slate-600 font-medium"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Vibrant Orange Footer with Giant FASTCLEAR Wordmark -->
+    <footer class="bg-orange-600 text-white pt-16 pb-12 overflow-hidden border-t border-orange-700">
+        <div class="max-w-7xl mx-auto px-6 space-y-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-sm font-semibold text-orange-100">
+                <div class="flex flex-wrap gap-6">
+                    <a href="index.html" class="hover:text-white transition">Home</a>
+                    <a href="about.html" class="hover:text-white transition">About</a>
+                    <a href="services.html" class="hover:text-white transition">Services & Calculator</a>
+                    <a href="hubs.html" class="hover:text-white transition">Nationwide Hubs</a>
+                    <a href="support.html" class="hover:text-white transition">Support</a>
+                </div>
+                <p>&copy; 2026 Fastclear Cargo. All rights reserved.</p>
+            </div>
+            
+            <div class="pt-8 border-t border-orange-500/50">
+                <h1 class="text-[14vw] font-serif-title font-black uppercase tracking-tighter leading-none select-none text-white text-center">
+                    FASTCLEAR
+                </h1>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function calculateCost() {
+            let weight = parseFloat(document.getElementById('weight').value) || 0;
+            let mode = document.getElementById('mode').value;
+            let serviceType = document.getElementById('serviceType').value;
+            
+            let ratePerKg = 8500; 
+            let baseHandling = (mode === 'air') ? 10000 : 5000;
+            let expressFee = (serviceType === 'express') ? 15000 : 0;
+
+            let total = (weight * ratePerKg) + baseHandling + expressFee;
+            let transitTime = (mode === 'air') ? (serviceType === 'express' ? 'Estimated Delivery: 2-3 Days' : 'Estimated Delivery: 4-6 Days') : 'Estimated Delivery: 3-5 Weeks';
+
+            let resultBox = document.getElementById('costResult');
+            let priceOutput = document.getElementById('priceOutput');
+            let transitOutput = document.getElementById('transitOutput');
+
+            resultBox.classList.remove('hidden');
+            priceOutput.innerText = '₦' + total.toLocaleString();
+            transitOutput.innerText = transitTime;
+        }
+    </script>
+</body>
+</html>
