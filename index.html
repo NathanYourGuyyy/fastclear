@@ -42,11 +42,13 @@
         #mobile-menu {
             max-height: 0;
             overflow: hidden;
+            border-top-width: 0;
             transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease;
             opacity: 0;
         }
         #mobile-menu.open {
             max-height: 500px;
+            border-top-width: 1px;
             opacity: 1;
         }
 
@@ -212,7 +214,7 @@
          NAVIGATION BAR (with mobile hamburger)
     ══════════════════════════════════════ -->
     <header class="border-b border-slate-200/80 bg-white/90 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto px-6 h-16 md:h-20 flex items-center justify-between">
             <!-- Logo -->
             <a href="index.html" class="flex items-center shrink-0">
                 <img src="logo.png" alt="Fastclear Cargo Logo" class="h-10 w-auto object-contain">
@@ -265,7 +267,7 @@
             <!-- Badge -->
             <div class="fade-up inline-flex items-center space-x-2 bg-white/10 border border-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full text-orange-300 text-xs font-semibold tracking-wide shadow">
                 <span class="inline-block w-2 h-2 bg-orange-400 rounded-full animate-pulse"></span>
-                <span>⚡ Global Freight Solutions You Can Trust</span>
+                <span><span aria-hidden="true" class="inline-flex h-3 w-3 align-[-0.125em] text-yellow-400"><svg viewBox="0 0 16 16" class="h-full w-full" fill="currentColor"><path d="M9.1 1 3.5 8.3h3.8L6.9 15l5.6-7.3H8.7L9.1 1Z"/></svg></span> Global Freight Solutions You Can Trust</span>
             </div>
 
             <!-- Headline -->
