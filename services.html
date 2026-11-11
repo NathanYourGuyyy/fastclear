@@ -38,13 +38,13 @@
     </section>
 
     <!-- Services & Calculator Section -->
-    <main class="max-w-7xl mx-auto px-6 py-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-start flex-grow">
+    <main class="max-w-7xl mx-auto px-6 py-20 flex flex-col items-center gap-12 flex-grow">
         
-        <div class="lg:col-span-5 space-y-6">
+        <div class="w-full max-w-5xl space-y-6">
             <span class="text-xs font-bold text-orange-600 uppercase tracking-widest">— Capabilities & Pricing</span>
             <h1 class="text-3xl sm:text-5xl font-serif-title font-bold text-blue-950">Sea & Air Freight Solutions</h1>
             <p class="text-slate-600 text-sm leading-relaxed">
-                Choose the transport mode that fits your timeline and budget. Standard shipping rate is ₦8,500 per kg. Use our interactive estimator to calculate costs instantly.
+                Choose the transport mode that fits your timeline and budget. Use our interactive estimator to calculate costs instantly.
             </p>
 
             <div class="space-y-4 pt-2">
@@ -59,45 +59,49 @@
             </div>
         </div>
 
-        <div id="shipping-estimator" class="lg:col-span-7 bg-white border border-slate-200/80 p-8 rounded-3xl shadow-xl shadow-slate-900/5 relative overflow-hidden">
-            <h3 class="text-2xl font-serif-title font-bold mb-6 flex items-center justify-between text-blue-950">
-                <span>Shipping Cost Estimator</span>
-                <span class="text-xs bg-orange-100 text-orange-700 font-bold px-3 py-1 rounded-full">₦8,500 / kg</span>
-            </h3>
+        <section id="shipping-estimator" class="calculator-card w-full max-w-[520px]" aria-labelledby="calculator-title">
+            <header class="calculator-card__header">
+                <p class="calculator-eyebrow">Quick estimate</p>
+                <h2 id="calculator-title" class="font-serif-title">Shipping cost calculator</h2>
+                <p>Get a clear estimate for your package.</p>
+            </header>
 
-            <div class="space-y-5">
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Package Weight (kg)</label>
-                    <input type="number" id="weight" value="10" min="1" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-slate-900 focus:outline-none focus:border-orange-500 font-semibold text-sm">
-                </div>
+            <div class="calculator-fields">
+                <fieldset class="calculator-field">
+                    <legend class="calculator-label">Destination</legend>
+                    <div class="calculator-destination" data-destination="UK" role="group" aria-label="Choose destination">
+                        <button class="calculator-destination__option is-selected" type="button" data-destination-option="UK" aria-pressed="true">United Kingdom</button>
+                        <button class="calculator-destination__option" type="button" data-destination-option="US" aria-pressed="false">United States</button>
+                    </div>
+                </fieldset>
 
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Shipping Mode</label>
-                    <select id="mode" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-slate-900 focus:outline-none focus:border-orange-500 font-semibold text-sm">
-                        <option value="air">Air Freight (Standard Rate)</option>
-                        <option value="sea">Sea Freight (Standard Rate)</option>
-                    </select>
-                </div>
+                <fieldset class="calculator-field">
+                    <legend class="calculator-label">Shipping method</legend>
+                    <div id="method-options" class="calculator-methods"></div>
+                </fieldset>
 
-                <div>
-                    <label class="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">Service Type</label>
-                    <select id="serviceType" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-slate-900 focus:outline-none focus:border-orange-500 font-semibold text-sm">
-                        <option value="normal">Normal Delivery</option>
-                        <option value="express">Express Priority (+ ₦15,000 fee)</option>
-                    </select>
-                </div>
-
-                <button onclick="calculateCost()" class="w-full bg-slate-950 hover:bg-slate-800 text-white font-medium py-4 rounded-full transition active:scale-95 text-sm">
-                    Calculate Estimated Cost
-                </button>
-
-                <div id="costResult" aria-live="polite" class="hidden mt-6 p-6 bg-orange-50 border border-orange-200 rounded-2xl text-center space-y-1">
-                    <p class="text-xs text-orange-800 uppercase tracking-widest font-bold">Total Estimated Price</p>
-                    <p id="priceOutput" class="text-3xl font-serif-title font-bold text-blue-950">₦0.00</p>
-                    <p id="transitOutput" class="text-xs text-slate-600 font-medium"></p>
+                <div class="calculator-field">
+                    <label class="calculator-label" for="weight">Package weight</label>
+                    <div class="calculator-weight">
+                        <button class="calculator-stepper" type="button" data-weight-step="-1" aria-label="Decrease weight">−</button>
+                        <div class="calculator-weight__input-wrap">
+                            <input id="weight" name="weight" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="0.0" aria-describedby="weight-unit">
+                            <span id="weight-unit">kg</span>
+                        </div>
+                        <button class="calculator-stepper" type="button" data-weight-step="1" aria-label="Increase weight">+</button>
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <div id="cost-result" class="calculator-result" aria-live="polite" aria-atomic="true">
+                <p class="calculator-result__label">Estimated total</p>
+                <p id="price-output" class="calculator-result__price" hidden></p>
+                <p id="result-hint" class="calculator-result__hint">Enter your package weight to see an estimate.</p>
+                <p id="breakdown-output" class="calculator-result__breakdown" hidden></p>
+                <a class="calculator-cta" href="support.html">Get an exact quote</a>
+                <p class="calculator-note">This is an estimate. The final price is confirmed after your package is weighed.</p>
+            </div>
+        </section>
     </main>
 
     <!-- Vibrant Orange Footer with Giant FASTCLEAR Wordmark -->
@@ -122,28 +126,7 @@
         </div>
     </footer>
 
-    <script>
-        function calculateCost() {
-            let weight = parseFloat(document.getElementById('weight').value) || 0;
-            let mode = document.getElementById('mode').value;
-            let serviceType = document.getElementById('serviceType').value;
-            
-            let ratePerKg = 8500; 
-            let baseHandling = (mode === 'air') ? 10000 : 5000;
-            let expressFee = (serviceType === 'express') ? 15000 : 0;
-
-            let total = (weight * ratePerKg) + baseHandling + expressFee;
-            let transitTime = (mode === 'air') ? (serviceType === 'express' ? 'Estimated Delivery: 2-3 Days' : 'Estimated Delivery: 4-6 Days') : 'Estimated Delivery: 3-5 Weeks';
-
-            let resultBox = document.getElementById('costResult');
-            let priceOutput = document.getElementById('priceOutput');
-            let transitOutput = document.getElementById('transitOutput');
-
-            resultBox.classList.remove('hidden');
-            priceOutput.innerText = '₦' + total.toLocaleString();
-            transitOutput.innerText = transitTime;
-        }
-    </script>
+    <script src="calculator.js" defer></script>
     <script src="cursor.js" defer></script>
 </body>
 </html>
