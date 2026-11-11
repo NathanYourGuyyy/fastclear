@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services & Calculator | Fastclear Cargo</title>
+    <title>Services | Fastclear Cargo</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -20,10 +20,22 @@
             <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
                 <a href="index.html" class="hover:text-orange-600 transition">Home</a>
                 <a href="about.html" class="hover:text-orange-600 transition">About</a>
-                <a href="services.html" class="text-orange-600 font-semibold">Services & Calculator</a>
+                <a href="services.html" class="text-orange-600 font-semibold">Services</a>
+                <a href="calculator.html" class="hover:text-orange-600 transition">Calculator</a>
                 <a href="hubs.html" class="hover:text-orange-600 transition">Nationwide Hubs</a>
                 <a href="support.html" class="hover:text-orange-600 transition">Support</a>
             </nav>
+            <details class="relative md:hidden">
+                <summary class="flex min-h-11 cursor-pointer list-none items-center rounded-full border border-slate-300 px-3 text-sm font-medium text-slate-700">Menu</summary>
+                <nav class="absolute right-0 z-50 mt-2 grid min-w-56 gap-1 rounded-xl border border-slate-200 bg-white p-2 shadow-lg" aria-label="Mobile navigation">
+                    <a href="index.html" class="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Home</a>
+                    <a href="about.html" class="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-slate-700 hover:bg-slate-50">About</a>
+                    <a href="services.html" class="flex min-h-11 items-center rounded-lg bg-orange-50 px-3 text-sm font-semibold text-orange-700" aria-current="page">Services</a>
+                    <a href="calculator.html" class="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Calculator</a>
+                    <a href="hubs.html" class="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Nationwide Hubs</a>
+                    <a href="support.html" class="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-slate-700 hover:bg-slate-50">Support</a>
+                </nav>
+            </details>
             <a href="services.html" class="bg-slate-950 hover:bg-slate-800 text-white px-5 py-2.5 rounded-full font-medium text-sm transition active:scale-95">Get a Quote</a>
         </div>
     </header>
@@ -33,11 +45,11 @@
             <span class="text-xs font-bold uppercase tracking-widest text-orange-300">Capabilities &amp; Pricing</span>
             <h1 class="mt-4 max-w-3xl text-4xl sm:text-6xl font-serif-title font-bold leading-tight">Freight that moves your business forward</h1>
             <p class="mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-white/85">Air and sea freight, customs clearance, and practical shipping estimates for cargo moving to and from Nigeria.</p>
-            <a href="#shipping-estimator" class="mt-8 inline-flex items-center bg-orange-600 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-orange-700">Estimate shipping <span class="ml-2" aria-hidden="true">&rarr;</span></a>
+            <a href="calculator.html" class="mt-8 inline-flex items-center bg-orange-600 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-orange-700">Estimate shipping <span class="ml-2" aria-hidden="true">&rarr;</span></a>
         </div>
     </section>
 
-    <!-- Services & Calculator Section -->
+    <!-- Services Section -->
     <main class="max-w-7xl mx-auto px-6 py-20 flex flex-col items-center gap-12 flex-grow">
         
         <div class="w-full max-w-5xl space-y-6">
@@ -57,51 +69,12 @@
                     <p class="text-xs text-slate-600 mt-1">Economical shipping for bulk commercial goods (3 to 6 Weeks).</p>
                 </div>
             </div>
+
+            <div class="mt-8 flex flex-col gap-4 rounded-3xl border border-slate-200/80 bg-slate-50 p-6 sm:flex-row sm:items-center sm:justify-between">
+                <h2 class="font-serif-title text-xl font-bold text-blue-950">Get an instant shipping estimate</h2>
+                <a href="calculator.html" class="inline-flex min-h-11 items-center justify-center rounded-full bg-orange-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-orange-700">Open the calculator</a>
+            </div>
         </div>
-
-        <section id="shipping-estimator" class="calculator-card w-full max-w-[520px]" aria-labelledby="calculator-title">
-            <header class="calculator-card__header">
-                <p class="calculator-eyebrow">Quick estimate</p>
-                <h2 id="calculator-title" class="font-serif-title">Shipping cost calculator</h2>
-                <p>Get a clear estimate for your package.</p>
-            </header>
-
-            <div class="calculator-fields">
-                <fieldset class="calculator-field">
-                    <legend class="calculator-label">Destination</legend>
-                    <div class="calculator-destination" data-destination="UK" role="group" aria-label="Choose destination">
-                        <button class="calculator-destination__option is-selected" type="button" data-destination-option="UK" aria-pressed="true">United Kingdom</button>
-                        <button class="calculator-destination__option" type="button" data-destination-option="US" aria-pressed="false">United States</button>
-                    </div>
-                </fieldset>
-
-                <fieldset class="calculator-field">
-                    <legend class="calculator-label">Shipping method</legend>
-                    <div id="method-options" class="calculator-methods"></div>
-                </fieldset>
-
-                <div class="calculator-field">
-                    <label class="calculator-label" for="weight">Package weight</label>
-                    <div class="calculator-weight">
-                        <button class="calculator-stepper" type="button" data-weight-step="-1" aria-label="Decrease weight">−</button>
-                        <div class="calculator-weight__input-wrap">
-                            <input id="weight" name="weight" type="number" min="0.1" step="0.1" inputmode="decimal" placeholder="0.0" aria-describedby="weight-unit">
-                            <span id="weight-unit">kg</span>
-                        </div>
-                        <button class="calculator-stepper" type="button" data-weight-step="1" aria-label="Increase weight">+</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="cost-result" class="calculator-result" aria-live="polite" aria-atomic="true">
-                <p class="calculator-result__label">Estimated total</p>
-                <p id="price-output" class="calculator-result__price" hidden></p>
-                <p id="result-hint" class="calculator-result__hint">Enter your package weight to see an estimate.</p>
-                <p id="breakdown-output" class="calculator-result__breakdown" hidden></p>
-                <a class="calculator-cta" href="support.html">Get an exact quote</a>
-                <p class="calculator-note">This is an estimate. The final price is confirmed after your package is weighed.</p>
-            </div>
-        </section>
     </main>
 
     <!-- Vibrant Orange Footer with Giant FASTCLEAR Wordmark -->
@@ -111,7 +84,7 @@
                 <div class="flex flex-wrap gap-6">
                     <a href="index.html" class="hover:text-white transition">Home</a>
                     <a href="about.html" class="hover:text-white transition">About</a>
-                    <a href="services.html" class="hover:text-white transition">Services & Calculator</a>
+                    <a href="services.html" class="hover:text-white transition">Services</a>
                     <a href="hubs.html" class="hover:text-white transition">Nationwide Hubs</a>
                     <a href="support.html" class="hover:text-white transition">Support</a>
                 </div>
@@ -126,7 +99,6 @@
         </div>
     </footer>
 
-    <script src="calculator.js" defer></script>
     <script src="cursor.js" defer></script>
 </body>
 </html>

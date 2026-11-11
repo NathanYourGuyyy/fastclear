@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Get a shipping estimate for cargo from Nigeria to the United Kingdom or United States.">
+  <title>Shipping Calculator | Fastclear Cargo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="calculator-page.css">
+  <script src="calculator-page.js" defer></script>
+</head>
+<body class="calculator-page">
+  <header class="calculator-site-header">
+    <div class="calculator-header-inner">
+      <a class="calculator-logo" href="index.html">
+        <img src="logo.png" alt="Fastclear Cargo">
+      </a>
+      <nav class="calculator-desktop-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="calculator.html" aria-current="page">Calculator</a>
+        <a href="hubs.html">Hubs</a>
+        <a href="support.html">Support</a>
+      </nav>
+      <details class="calculator-mobile-nav">
+        <summary aria-label="Open navigation menu">Menu</summary>
+        <nav aria-label="Mobile navigation">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="services.html">Services</a>
+          <a href="calculator.html" aria-current="page">Calculator</a>
+          <a href="hubs.html">Hubs</a>
+          <a href="support.html">Support</a>
+        </nav>
+      </details>
+    </div>
+  </header>
+
+  <main class="calculator-main">
+    <p class="calculator-eyebrow">Fastclear Cargo</p>
+    <h1 class="calculator-page-title">Shipping cost calculator</h1>
+    <p class="calculator-intro">Get an estimate for cargo shipping from Nigeria to the United Kingdom or United States.</p>
+
+    <section id="email-gate" class="calculator-card" aria-labelledby="gate-title">
+      <div class="calculator-card-heading">
+        <span class="calculator-step">01</span>
+        <h2 id="gate-title">Unlock your calculator</h2>
+        <p>Enter your email to get started with a shipping estimate.</p>
+      </div>
+      <form id="email-form" novalidate>
+        <label for="email-input">Email address</label>
+        <input id="email-input" name="email" type="email" autocomplete="email" maxlength="254" required>
+        <div class="calculator-honeypot" aria-hidden="true">
+          <label for="company-website">Leave this field empty</label>
+          <input id="company-website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <button id="unlock-button" class="calculator-primary-button" type="submit">Unlock calculator</button>
+        <p class="calculator-terms">We will send your estimate to this email. By continuing you agree to be contacted about your shipment.</p>
+        <p id="email-error" class="calculator-message calculator-message--error" role="status" hidden></p>
+      </form>
+    </section>
+
+    <section id="calculator-panel" class="calculator-card" aria-labelledby="calculator-title" hidden>
+      <div class="calculator-card-heading">
+        <span class="calculator-step">02</span>
+        <h2 id="calculator-title">Build your estimate</h2>
+        <p>Choose your destination and shipping method, then enter the package weight.</p>
+      </div>
+      <div class="calculator-account">
+        <span>Estimate for <strong id="registered-email"></strong></span>
+        <button id="change-email" class="calculator-text-button" type="button">Change email</button>
+      </div>
+
+      <form id="quote-form" novalidate>
+        <fieldset class="calculator-field">
+          <legend>Destination</legend>
+          <div class="calculator-destination" role="group" aria-label="Choose destination">
+            <button type="button" class="calculator-toggle is-selected" data-destination="UK" aria-pressed="true">United Kingdom</button>
+            <button type="button" class="calculator-toggle" data-destination="US" aria-pressed="false">United States</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="calculator-field">
+          <legend>Shipping method</legend>
+          <div class="calculator-methods">
+            <label class="calculator-method is-selected">
+              <input type="radio" name="method" value="sea" checked>
+              <span class="calculator-radio" aria-hidden="true"></span>
+              <span class="calculator-method-copy">
+                <strong>Sea/Cargo</strong>
+                <span>Sea freight shipping</span>
+              </span>
+            </label>
+            <label class="calculator-method">
+              <input type="radio" name="method" value="express">
+              <span class="calculator-radio" aria-hidden="true"></span>
+              <span class="calculator-method-copy">
+                <strong>Express/DHL</strong>
+                <span>Express shipping</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="calculator-field">
+          <label for="weight-input">Package weight</label>
+          <div class="calculator-weight-control">
+            <button class="calculator-stepper" type="button" data-weight-step="-1" aria-label="Decrease weight">-</button>
+            <input id="weight-input" name="weight_kg" type="number" min="0.1" max="10000" step="0.1" inputmode="decimal" aria-describedby="weight-hint">
+            <span class="calculator-unit">kg</span>
+            <button class="calculator-stepper" type="button" data-weight-step="1" aria-label="Increase weight">+</button>
+          </div>
+          <p id="weight-hint" class="calculator-hint" aria-live="polite">Enter a weight greater than 0 and no more than 10,000 kg.</p>
+        </div>
+
+        <button id="estimate-button" class="calculator-primary-button" type="submit">Get my estimate</button>
+        <p id="quote-error" class="calculator-message calculator-message--error" role="status" hidden></p>
+      </form>
+
+      <section id="quote-result" class="calculator-result" aria-live="polite" aria-atomic="true" hidden>
+        <p class="calculator-result-label">Your estimated total</p>
+        <p id="result-total" class="calculator-result-total"></p>
+        <p id="result-breakdown" class="calculator-result-breakdown"></p>
+        <p id="result-email-message" class="calculator-result-message"></p>
+        <p class="calculator-result-note">This is an estimate. The final price is confirmed after your package is weighed.</p>
+      </section>
+    </section>
+  </main>
+
+  <footer class="calculator-footer">
+    <div class="calculator-footer-inner">
+      <div class="calculator-footer-links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="calculator.html">Calculator</a>
+        <a href="support.html">Support</a>
+      </div>
+      <p>© 2026 Fastclear Cargo. All rights reserved.</p>
+    </div>
+    <p class="calculator-wordmark" aria-hidden="true">FASTCLEAR</p>
+  </footer>
+</body>
+</html>
